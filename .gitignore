@@ -3,7 +3,7 @@ venv/
 *.db
 *.sqlite3
 *.sqlite
-*__pycache__/*
+*__pycache__/
 eventos/capa/*.*
 eventos/galeria/*.*
 *.pyc
