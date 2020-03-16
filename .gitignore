@@ -1,0 +1,10 @@
+.env
+venv/
+*.db
+*.sqlite3
+*.sqlite
+*__pycache__/*
+eventos/capa/*.*
+eventos/galeria/*.*
+
+
