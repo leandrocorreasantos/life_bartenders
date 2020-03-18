@@ -56,10 +56,14 @@ class Evento(models.Model):
     def __str__(self):
         return self.titulo
 
+    def get_absolute_url(self):
+        return "/evento/{}".format(self.slug)
+
     def save(self):
         # set slug:
-        new_slug = u"%s %s" % (
+        new_slug = u"%s %s %s" % (
             self.titulo,
+            self.cidade,
             self.data.strftime('%d %m %Y')
         )
         self.slug = slugify(new_slug)
@@ -75,15 +79,6 @@ class Evento(models.Model):
                 pass
 
         super(Evento, self).save()
-
-    def delete(self):
-        images = Galeria.objects.filter(evento=self)
-        for image in images:
-            image.delete()
-
-        self.capa.delete(save=False)
-
-        super(Evento, self).delete()
 
 
 class Galeria(models.Model):
@@ -110,10 +105,6 @@ class Galeria(models.Model):
                 pass
 
         super(Galeria, self).save()
-
-    def delete(self):
-        self.imagem.delete(save=False)
-        super(Galeria, self).delete()
 
 
 @receiver(pre_delete, sender=Galeria)

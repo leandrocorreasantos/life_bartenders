@@ -13,8 +13,10 @@ class GaleriaInline(admin.TabularInline):
 
 class EventoAdmin(admin.ModelAdmin):
     exclude = ['slug']
-    search_fields = ['titulo', 'local']
+    search_fields = ['titulo', 'local', 'data', 'slug']
     inlines = [GaleriaInline, ]
+    list_display = ['titulo', 'data', 'local', 'cidade', 'visivel']
+    list_filter = ['data', 'visivel', 'cidade']
 
 # custom admin variables
 admin.site.site_header = 'Life Bartenders'
