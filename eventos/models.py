@@ -1,9 +1,21 @@
-from django.db import models
 import os
 import glob
+import logging
 from slugify import slugify
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # Create your models here.
+
+
+log = logging.getLogger(__name__)
+
+
+def _delete_file(path):
+    """ Deletes file from filesystem. """
+    if os.path.isfile(path):
+        os.remove(path)
 
 
 class Estado(models.Model):
@@ -44,10 +56,14 @@ class Evento(models.Model):
     def __str__(self):
         return self.titulo
 
+    def get_absolute_url(self):
+        return "/evento/{}".format(self.slug)
+
     def save(self):
         # set slug:
-        new_slug = u"%s %s" % (
+        new_slug = u"%s %s %s" % (
             self.titulo,
+            self.cidade,
             self.data.strftime('%d %m %Y')
         )
         self.slug = slugify(new_slug)
@@ -63,13 +79,6 @@ class Evento(models.Model):
                 pass
 
         super(Evento, self).save()
-
-    def delete(self):
-        try:
-            self.capa.delete(save=False)
-        except:
-            pass
-        super(Evento, self).delete()
 
 
 class Galeria(models.Model):
@@ -97,9 +106,14 @@ class Galeria(models.Model):
 
         super(Galeria, self).save()
 
-    def delete(self):
-        try:
-            self.imagem.delete(save=False)
-        except:
-            pass
-        super(Galeria, self).delete()
+
+@receiver(pre_delete, sender=Galeria)
+def delete_image_gallery(sender, instance, *args, **kwargs):
+    if instance.imagem:
+        _delete_file(instance.imagem.path)
+
+
+@receiver(pre_delete, sender=Evento)
+def delete_capa_evento(sender, instance, *args, **kwargs):
+    if instance.capa:
+        _delete_file(instance.capa.path)
