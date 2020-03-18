@@ -4,8 +4,8 @@ venv/
 *.sqlite3
 *.sqlite
 *__pycache__/
-eventos/capa/*.*
-eventos/galeria/*.*
+media/eventos/capa/*.*
+media/eventos/galeria/*.*
 *.pyc
 
 
