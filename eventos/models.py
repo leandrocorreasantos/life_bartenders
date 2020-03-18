@@ -1,9 +1,21 @@
-from django.db import models
 import os
 import glob
+import logging
 from slugify import slugify
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # Create your models here.
+
+
+log = logging.getLogger(__name__)
+
+
+def _delete_file(path):
+    """ Deletes file from filesystem. """
+    if os.path.isfile(path):
+        os.remove(path)
 
 
 class Estado(models.Model):
@@ -65,10 +77,12 @@ class Evento(models.Model):
         super(Evento, self).save()
 
     def delete(self):
-        try:
-            self.capa.delete(save=False)
-        except:
-            pass
+        images = Galeria.objects.filter(evento=self)
+        for image in images:
+            image.delete()
+
+        self.capa.delete(save=False)
+
         super(Evento, self).delete()
 
 
@@ -98,8 +112,17 @@ class Galeria(models.Model):
         super(Galeria, self).save()
 
     def delete(self):
-        try:
-            self.imagem.delete(save=False)
-        except:
-            pass
+        self.imagem.delete(save=False)
         super(Galeria, self).delete()
+
+
+@receiver(pre_delete, sender=Galeria)
+def delete_image_gallery(sender, instance, *args, **kwargs):
+    if instance.imagem:
+        _delete_file(instance.imagem.path)
+
+
+@receiver(pre_delete, sender=Evento)
+def delete_capa_evento(sender, instance, *args, **kwargs):
+    if instance.capa:
+        _delete_file(instance.capa.path)
