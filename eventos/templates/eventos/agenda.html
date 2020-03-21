@@ -1,4 +1,5 @@
 {% extends "default.html" %}
+{% load thumbnail %}
 {% block title %}Agenda{% endblock %}
 {% block content %}
     <!-- Hero Section -->
@@ -34,7 +35,7 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="left-box">
                         <div class="event-feature2">
-                            <img src="{{ resized_img_src(next_event.cover, width='600', height='515', mode='crop') }}" alt="{{ next_event.title }}">
+                            <img src="{% thumbnail next_event.cover 600x515 crop %}" alt="{{ next_event.title }}">
                         </div>
                     </div>
                 </div>
