@@ -1,0 +1,6 @@
+    <li {% if endpoint in request.path %} class="active" {% endif %}>
+        <a href="{% url(endpoint) %}">{{name}}</a>
+    </li>
+
+
+

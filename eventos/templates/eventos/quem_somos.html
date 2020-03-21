@@ -1,0 +1,114 @@
+{% extends "eventos/default.html" %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}Quem Somos{% endblock %}
+{% block content %}
+    <!-- Hero Section -->
+    <div class="page-header" id="home">
+        <div class="header-caption">
+            <div class="header-caption-contant">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="header-caption-inner">
+                                <h1>Quem Somos</h1>
+                                <p> <a href="#">Home </a> // Quem Somos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Hero Section -->
+    <!-- About Section -->
+    <div class="about-area inner-padding2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 foo">
+                    <div id="about-slider-screen" class="owl-carousel owl-theme about-slider">
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-5">
+                                    <div class="about-frature">
+                                        <img src="{% static 'img/service-3.png' %}" alt="Life Bartenders - Quem Somos">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-7">
+                                    <div class="about-content">
+                                        <h3 class="about-title">Quem Somos</h3>
+                                        <p>A Life Bartenders começou atuar no mercado desde 2017, quando ojovem empreendedor Fernando Henrique vindo de Florianópolis,  conhecendo o mercado de drinks vê a necessidade de algo do ramo em sua cidade Natal Cascavel PR, e decidiu então começar uma empresa de Bartenders para eventos, em então a Life veio expandindo até que em 2019 passa a ter sede em Umuarama PR, após mais um jovem, o atual Proprietário e Diretor Daniel Lima acreditar no potencial da empresa e decidir colocar a mesma em ação na sua Cidade.</p>
+                                        <p>Hoje não somos somente conceito em eventos, mas no que se diz em excelência em treinamentos, consultorias,  gestões de equipes, parcerias e assistência a franquiados, alunos e clientes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End About Section -->
+    <!-- What We Offers Section -->
+    <div class="offer-area inner-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 foo">
+                    <div class="section-title-area">
+                        <h2 class="section-title">Nossos Serviços</h2>
+                        <div class="section-divider"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6 foo">
+                    <div class="offer-widget">
+                        <div class="offer-feature">
+                            <img src="{% static 'img/about_us/locacao-estrutura.jpg' %}" alt="Life Bartenders - Locação de Estruturas">
+                        </div>
+                        <div class="offer-short">
+                            <a href="#"><h3>Locação de Estruturas</h3></a>
+                            <p>Locamos estruturas de Bar, utensílios e vários objetos de bar para decoração do seu evento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 foo">
+                    <div class="offer-widget">
+                        <div class="offer-feature">
+                            <img src="{% static 'img/about_us/servico-bartenders.jpg' %}" alt="Life Bartenders - Serviço de Bartenders">
+                        </div>
+                        <div class="offer-short">
+                            <a href="#"><h3>Serviço Completo de Bartender</h3></a>
+                            <p>Serviço de bar completo, com estrutura, mão de obra e matéria-prima para se utilizar no evento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 foo">
+                    <div class="offer-widget">
+                        <div class="offer-feature">
+                            <img src="{% static 'img/about_us/cursos.jpg' %}" alt="Life Bartenders - Cursos">
+
+                        </div>
+                        <div class="offer-short">
+                            <a href="#"><h3>Cursos</h3></a>
+                            <p>Ministramos cursos de Bartender pra quem tem vontade de conhecer sobre a área e começar seu próprio negócio.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 foo">
+                    <div class="offer-widget">
+                        <div class="offer-feature">
+                            <img src="{% static 'img/about_us/franquias.jpg' %}" alt="Life Bartenders - Franquias">
+                        </div>
+                        <div class="offer-short pb0">
+                            <a href="#"><h3>Franquias</h3></a>
+                            <p>A Life Bartendes pode estar onde você está. Franquiamos a empresa para todo Brasil com suporte e treinamento de qualidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End What We Offers Section -->
+
+{% endblock %}

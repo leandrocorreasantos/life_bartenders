@@ -28,6 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+ENVIRONMENT = env('ENVIRONMENT')
 
 ALLOWED_HOSTS = ['localhost', 'lifebartenders.com.br']
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'eventos.apps.EventosConfig',
+    'easy_thumbnails'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-if env('ENVIRONMENT') == 'production':
+if ENVIRONMENT == 'production':
     DATABASES = {
         'default': {
             'ENGINE': env('DATABASE_ENGINE'),
@@ -131,7 +133,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT = env('STATIC_ROOT')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if ENVIRONMENT == 'development':
+    STATIC_ROOT = env('STATIC_ROOT')
+    MEDIA_ROOT = env('MEDIA_ROOT')
 STATIC_URL = '/static/'
-MEDIA_ROOT = env('MEDIA_ROOT')
 MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+    '/home/lifebartenders/www/static'
+]
