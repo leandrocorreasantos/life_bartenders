@@ -1,5 +1,7 @@
-{% extends "default.html" %}
-{% block title %}Agenda{% endblock %}
+{% extends "eventos/default.html" %}
+{% load imagekit %}
+{% load static %}
+{% block title %}{{ evento.titulo }}{% endblock %}
 {% block content %}
     <!-- Hero Section -->
     <div class="page-header" id="home">
@@ -9,9 +11,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="header-caption-inner">
-                                <h1>{{ evento.title }}</h1>
+                                <h1>{{ evento.titulo }}</h1>
                                 <p>
-                                    <a href="/"> Home </a> // <a href='/eventos'> Eventos</a> // {{ evento.title }}
+                                    <a href="/"> Home </a> // <a href='/eventos'> Eventos</a> // {{ evento.titulo }}
                                 </p>
                             </div>
                         </div>
@@ -28,15 +30,16 @@
                 <div class="col-12">
                     <div class="photos-gallery">
                         <div class="gallery-masonry gallery">
-                            {% for foto in fotos.items %}
+                            {% for foto in galeria %}
                                 <div class="gallery-item">
                                     <div class="photo-gallery-inner">
-                                        <img src="{{ resized_img_src(foto.image, width='600', mode='pad', background='#000000')}}" alt="{{ evento.title }}">
+
+                                        {% thumbnail '600x600' foto.imagem %}
                                         <div class="caption">
                                             <div class="caption-inner">
                                                 <div class="caption-content">
                                                     <ul>
-                                                        <li><a href="{{ url_for('static', filename=foto.image) }}"><i class="fa fa-search-plus"></i></a></li>
+                                                        <li><a href="{{ foto.imagem.url }}"><i class="fa fa-search-plus"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -51,12 +54,12 @@
             <div class="row foo">
                 <div class="col-12">
                     <div class="gallery-btn">
-                        {% if fotos.has_prev %}
-                            <a href="{{ url_for('agenda_view', evento_id=evento.id, evento_slug=evento.slug, page=fotos.prev_num) }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
+                        {% if galeria.has_previous %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ galeria.previous_page_number }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
                         {% endif %}
-                        <div class="btn btn-default btn-sm-field" role="button">{{ fotos.page }}</div>
-                        {% if fotos.has_next %}
-                            <a href="{{ url_for('agenda_view', evento_id=evento.id, evento_slug=evento.slug, page=fotos.next_num) }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
+                        <div class="btn btn-default btn-sm-field" role="button">Página {{ galeria.number }} de {{ galeria.paginator.num_pages }}</div>
+                        {% if galeria.has_next %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ galeria.next_page_number }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
                         {% endif %}
 
                     </div>

@@ -338,7 +338,7 @@ $(window).on('load', function() {
             var values = "fname=" + fname + "&email=" + email + "&phone=" + phone + "&msg=" + msg;
             $.ajax({
                 type: "POST",
-                url: "sendMail.php",
+                url: "/contato/",
                 data: values,
                 success: function() {
                     $('#fname').val('');

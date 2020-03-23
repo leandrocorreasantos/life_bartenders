@@ -1,5 +1,5 @@
-{% extends "default.html" %}
-{% load thumbnail %}
+{% extends "eventos/default.html" %}
+{% load imagekit %}
 {% block title %}Agenda{% endblock %}
 {% block content %}
     <!-- Hero Section -->
@@ -35,19 +35,19 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="left-box">
                         <div class="event-feature2">
-                            <img src="{% thumbnail next_event.cover 600x515 crop %}" alt="{{ next_event.title }}">
+                            {% thumbnail '600x515' next_event.capa %}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
                     <div class="right-box">
                         <div class="short-content">
-                            <h4 class="event-name">{{ next_event.title }}</h4>
-                            <p>{{ next_event.description }}</p>
+                            <h4 class="event-name">{{ next_event.titulo }}</h4>
+                            <p>{{ next_event.descricao }}</p>
                         </div>
                         <div class="upcoming">
                             <span class="is-countdown"></span>
-                            <div data-countdown="{{ next_event.date.strftime('%Y-%m-%d %H:%M') }}"></div>
+                            <div data-countdown="{{ next_event.data|date:'Y-m-d H:i' }}"></div>
                         </div>
                     </div>
                 </div>
@@ -71,13 +71,28 @@
                     <div class="col-12 col-md-6 col-lg-3 foo">
                         <div class="popular-event">
                             <div class="event-feature2">
-                                <img src="{{ resized_img_src(agenda.cover, width='600', height='598', mode='crop') }}" alt="{{ agenda.title }}">
+                                {% thumbnail '600x598' agenda.capa %}
                             </div>
-                            <a href="#" class="event-name">{{ agenda.title }}</a>
-                            <div class="date-sticker2">{{ agenda.date.strftime('%d/%m/%Y %H:%M') }}</div>
+                            <a href="#" class="event-name">{{ agenda.titulo }}</a>
+                            <div class="date-sticker2">{{ agenda.data|date:'d/m/Y' }}</div>
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+
+            <div class="row foo">
+                <div class="col-12">
+                    <div class="gallery-btn">
+                        {% if agendas.has_previous %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ agendas.previous_page_number }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
+                        {% endif %}
+                        <div class="btn btn-default btn-sm-field" role="button">Página {{ agendas.number }} de {{ agendas.paginator.num_pages }}</div>
+                        {% if agendas.has_next %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ agendas.next_page_number }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
+                        {% endif %}
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

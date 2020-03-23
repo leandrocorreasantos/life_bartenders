@@ -2,6 +2,8 @@ import os
 import glob
 import logging
 from slugify import slugify
+import pytz
+from datetime import datetime
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
@@ -10,6 +12,8 @@ from django.dispatch import receiver
 
 
 log = logging.getLogger(__name__)
+
+agora = datetime.now(pytz.UTC)
 
 
 def _delete_file(path):
@@ -39,6 +43,10 @@ class Cidade(models.Model):
 
 
 class Evento(models.Model):
+
+    class Meta:
+        ordering = ['id']
+
     titulo = models.CharField('Título', max_length=255)
     slug = models.SlugField(max_length=255, null=True)
     descricao = models.TextField('Descrição')
@@ -57,7 +65,7 @@ class Evento(models.Model):
         return self.titulo
 
     def get_absolute_url(self):
-        return "/evento/{}".format(self.slug)
+        return "/evento/{}/{}/".format(self.slug, self.pk)
 
     def save(self):
         # set slug:
@@ -80,8 +88,30 @@ class Evento(models.Model):
 
         super(Evento, self).save()
 
+    @classmethod
+    def proximo(cls):
+        return cls.objects.filter(
+            data__gte=datetime.now(pytz.UTC)
+        ).get()
+
+    @classmethod
+    def agenda(cls):
+        return cls.objects.filter(
+            data__gte=agora
+        ).filter(visivel=True).order_by('data').all()
+
+    @classmethod
+    def eventos(cls):
+        return cls.objects.filter(
+            data__lte=agora
+        ).filter(visivel=True).order_by('data').all()
+
 
 class Galeria(models.Model):
+
+    class Meta:
+        ordering = ['id']
+
     imagem = models.ImageField(upload_to='eventos/galeria/')
     evento = models.ForeignKey(
         Evento,

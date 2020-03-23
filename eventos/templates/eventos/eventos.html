@@ -1,4 +1,5 @@
-{% extends "default.html" %}
+{% extends "eventos/default.html" %}
+{% load imagekit %}
 {% block title %}Eventos{% endblock %}
 {% block content %}
     <!-- Hero Section -->
@@ -35,13 +36,27 @@
                     <div class="col-12 col-md-6 col-lg-3 foo">
                         <div class="popular-event">
                             <div class="event-feature2">
-                                <img src="{{ resized_img_src(evento.cover, width='600', height='598', mode='crop') }}" alt="{{ evento.title }}">
+                                {% thumbnail '600x598' evento.capa %}
                             </div>
-                            <a href="{{ url_for('agenda_view', evento_id=evento.id, evento_slug=evento.slug) }}" class="event-name">{{ evento.title }}</a>
-                            <div class="date-sticker2">{{ evento.date.strftime("%d/%m/%Y") }}</div>
+                            <a href="{{ evento.get_absolute_url }}" class="event-name">{{ evento.titulo }}</a>
+                            <div class="date-sticker2">{{ evento.data|date:"d/m/Y" }}</div>
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+            <div class="row foo">
+                <div class="col-12">
+                    <div class="gallery-btn">
+                        {% if eventos.has_previous %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ eventos.previous_page_number }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
+                        {% endif %}
+                        <div class="btn btn-default btn-sm-field" role="button">Página {{ eventos.number }} de {{ eventos.paginator.num_pages }}</div>
+                        {% if eventos.has_next %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ eventos.next_page_number }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
+                        {% endif %}
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

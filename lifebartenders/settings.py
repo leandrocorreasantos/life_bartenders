@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'eventos.apps.EventosConfig',
-    'easy_thumbnails'
+    'imagekit'
 ]
 
 MIDDLEWARE = [
@@ -55,6 +55,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+""" email config """
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
+
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.lifebartenders.com.br'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'lifebartenders@lifebartenders.com.br'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
 
 ROOT_URLCONF = 'lifebartenders.urls'
 
