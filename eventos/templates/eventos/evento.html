@@ -1,0 +1,71 @@
+{% extends "eventos/default.html" %}
+{% load imagekit %}
+{% load static %}
+{% block title %}{{ evento.titulo }}{% endblock %}
+{% block content %}
+    <!-- Hero Section -->
+    <div class="page-header" id="home">
+        <div class="header-caption">
+            <div class="header-caption-contant">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="header-caption-inner">
+                                <h1>{{ evento.titulo }}</h1>
+                                <p>
+                                    <a href="/"> Home </a> // <a href='/eventos'> Eventos</a> // {{ evento.titulo }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Hero Section -->
+    <!-- Main Gallery Section -->
+    <div class="main-gallery-area inner-padding2">
+        <div class="container">
+            <div class="row" id="photos">
+                <div class="col-12">
+                    <div class="photos-gallery">
+                        <div class="gallery-masonry gallery">
+                            {% for foto in galeria %}
+                                <div class="gallery-item">
+                                    <div class="photo-gallery-inner">
+
+                                        {% thumbnail '600x600' foto.imagem %}
+                                        <div class="caption">
+                                            <div class="caption-inner">
+                                                <div class="caption-content">
+                                                    <ul>
+                                                        <li><a href="{{ foto.imagem.url }}"><i class="fa fa-search-plus"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row foo">
+                <div class="col-12">
+                    <div class="gallery-btn">
+                        {% if galeria.has_previous %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ galeria.previous_page_number }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
+                        {% endif %}
+                        <div class="btn btn-default btn-sm-field" role="button">Página {{ galeria.number }} de {{ galeria.paginator.num_pages }}</div>
+                        {% if galeria.has_next %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ galeria.next_page_number }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Main Gallery Section -->
+{% endblock %}

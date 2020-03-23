@@ -28,6 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+ENVIRONMENT = env('ENVIRONMENT')
 
 ALLOWED_HOSTS = ['localhost', 'lifebartenders.com.br']
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'eventos.apps.EventosConfig',
+    'imagekit'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+""" email config """
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
+
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.lifebartenders.com.br'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'lifebartenders@lifebartenders.com.br'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
 
 ROOT_URLCONF = 'lifebartenders.urls'
 
@@ -84,7 +99,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-if env('ENVIRONMENT') == 'production':
+if ENVIRONMENT == 'production':
     DATABASES = {
         'default': {
             'ENGINE': env('DATABASE_ENGINE'),
@@ -131,7 +146,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT = env('STATIC_ROOT')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if ENVIRONMENT == 'development':
+    STATIC_ROOT = env('STATIC_ROOT')
+    MEDIA_ROOT = env('MEDIA_ROOT')
 STATIC_URL = '/static/'
-MEDIA_ROOT = env('MEDIA_ROOT')
 MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [
+    '/home/lifebartenders/www/static'
+]

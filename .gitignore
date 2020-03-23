@@ -6,6 +6,9 @@ venv/
 *__pycache__/
 media/eventos/capa/*.*
 media/eventos/galeria/*.*
+/media/CACHE/*
+eventos/static/img/event_covers/*
+eventos/static/img/event_photos/*
 *.pyc
 
 

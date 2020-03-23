@@ -1,0 +1,64 @@
+{% extends "eventos/default.html" %}
+{% load imagekit %}
+{% block title %}Eventos{% endblock %}
+{% block content %}
+    <!-- Hero Section -->
+    <div class="page-header" id="home">
+        <div class="header-caption">
+            <div class="header-caption-contant">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="header-caption-inner">
+                                <h1>Eventos</h1>
+                                <p><a href="/"> Home </a> // Eventos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Hero Section -->
+    <!-- Popular Blog Section  -->
+    <div class="popular-event-area inner-padding3">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 foo">
+                    <div class="section-title-area">
+                        <h2 class="section-title">Últimos Eventos</h2>
+                        <div class="section-divider"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for evento in eventos %}
+                    <div class="col-12 col-md-6 col-lg-3 foo">
+                        <div class="popular-event">
+                            <div class="event-feature2">
+                                {% thumbnail '600x598' evento.capa %}
+                            </div>
+                            <a href="{{ evento.get_absolute_url }}" class="event-name">{{ evento.titulo }}</a>
+                            <div class="date-sticker2">{{ evento.data|date:"d/m/Y" }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row foo">
+                <div class="col-12">
+                    <div class="gallery-btn">
+                        {% if eventos.has_previous %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ eventos.previous_page_number }}" class="btn btn-default btn-sm-field" role="button"> &laquo;</a>
+                        {% endif %}
+                        <div class="btn btn-default btn-sm-field" role="button">Página {{ eventos.number }} de {{ eventos.paginator.num_pages }}</div>
+                        {% if eventos.has_next %}
+                            <a href="{{ evento.get_absolute_url }}?page={{ eventos.next_page_number }}" class="btn btn-default btn-sm-field" role="button"> &raquo;</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Popular Blog Section -->
+{% endblock %}
