@@ -90,21 +90,36 @@ class Evento(models.Model):
 
     @classmethod
     def proximo(cls):
-        return cls.objects.filter(
-            data__gte=datetime.now(pytz.UTC)
-        ).get()
+        try:
+            busca = cls.objects.filter(
+                data__gte=datetime.now(pytz.UTC)
+            ).get()
+        except:
+            busca = None
+
+        return busca
 
     @classmethod
     def agenda(cls):
-        return cls.objects.filter(
-            data__gte=agora
-        ).filter(visivel=True).order_by('data').all()
+        try:
+            busca = cls.objects.filter(
+                data__gte=agora
+            ).filter(visivel=True).order_by('data').all()
+        except:
+            busca = None
+
+        return busca
 
     @classmethod
     def eventos(cls):
-        return cls.objects.filter(
-            data__lte=agora
-        ).filter(visivel=True).order_by('data').all()
+        try:
+            busca = cls.objects.filter(
+                data__lte=agora
+            ).filter(visivel=True).order_by('data').all()
+        except:
+            busca = None
+
+        return busca
 
 
 class Galeria(models.Model):
