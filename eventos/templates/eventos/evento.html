@@ -33,8 +33,9 @@
                             {% for foto in galeria %}
                                 <div class="gallery-item">
                                     <div class="photo-gallery-inner">
-
-                                        {% thumbnail '600x600' foto.imagem %}
+                                        {% if foto.imagem %}
+                                            {% thumbnail '600x600' foto.imagem %}
+                                        {% endif %}
                                         <div class="caption">
                                             <div class="caption-inner">
                                                 <div class="caption-content">

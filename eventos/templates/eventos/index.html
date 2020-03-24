@@ -127,7 +127,9 @@
                         {% for agenda in agendas %}
                             <div class="item">
                                 <div class="jockey-feature">
-                                 {% thumbnail '274x224' agenda.capa %}
+                                {% if agenda.capa %}
+                                    {% thumbnail '274x224' agenda.capa %}
+                                {% endif %}
                                     <div class="caption">
                                         <div class="caption-inner">
                                             <div class="caption-content">
@@ -162,7 +164,9 @@
                         <div class="post-row">
                             <div class="post-header">
                                 <div class="post-feature">
-                                    {% thumbnail '600x675' evento.capa %}
+                                    {% if evento.capa %}
+                                        {% thumbnail '600x675' evento.capa %}
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="post-body">

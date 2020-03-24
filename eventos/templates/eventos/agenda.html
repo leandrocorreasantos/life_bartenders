@@ -35,7 +35,9 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="left-box">
                         <div class="event-feature2">
-                            {% thumbnail '600x515' next_event.capa %}
+                            {% if next_event.capa %}
+                                {% thumbnail '600x515' next_event.capa %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
