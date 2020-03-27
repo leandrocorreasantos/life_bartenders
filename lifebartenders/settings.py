@@ -32,6 +32,8 @@ ENVIRONMENT = env('ENVIRONMENT')
 
 ALLOWED_HOSTS = ['localhost', 'lifebartenders.com.br']
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'eventos.apps.EventosConfig',
     'imagekit'
 ]
@@ -57,7 +60,6 @@ MIDDLEWARE = [
 ]
 
 """ email config """
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
 
