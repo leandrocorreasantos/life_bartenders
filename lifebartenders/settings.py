@@ -65,7 +65,7 @@ CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
 
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST = 'smtp.lifebartenders.com.br'
+EMAIL_HOST = 'smtp-web.kinghost.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'lifebartenders@lifebartenders.com.br'
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
