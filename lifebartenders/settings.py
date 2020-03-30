@@ -63,8 +63,7 @@ MIDDLEWARE = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
 
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_TLS = False
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = int(env('EMAIL_PORT'))
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
