@@ -10,7 +10,8 @@ from lifebartenders.settings import (
     EMAIL_HOST,
     EMAIL_PORT,
     EMAIL_HOST_USER,
-    EMAIL_HOST_PASSWORD
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_SSL
 )
 
 
@@ -88,9 +89,14 @@ def contato(request):
                 nome, email, telefone, msg
             )
             try:
-                smtp = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
-                smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-                smtp.sendmail(email, CONTACT_EMAIL_BOX, mensagem)
+                if EMAIL_USE_SSL is True:
+                    smtp = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
+                    smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+                else:
+                    smtp = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+                    smtp.use_ehlo_or_helo_if_needed()
+
+                smtp.sendmail(email, [CONTACT_EMAIL_BOX], mensagem)
                 # send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
                 messages.add_message(
                     request,
