@@ -1,11 +1,17 @@
 from django.shortcuts import render
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import BadHeaderError  # , send_mail
 import smtplib
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
 from .models import Evento, Galeria
-from lifebartenders.settings import CONTACT_EMAIL_BOX
+from lifebartenders.settings import (
+    CONTACT_EMAIL_BOX,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_USER,
+    EMAIL_PASSWORD
+)
 
 
 # Create your views here.
@@ -69,7 +75,7 @@ def evento(request, slug, pk):
 
 
 def contato(request):
-    assunto = 'Life Bartenders - Contato do Site'
+    # assunto = 'Life Bartenders - Contato do Site'
     form = ContatoForm()
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -82,8 +88,8 @@ def contato(request):
                 nome, email, telefone, msg
             )
             try:
-                smtp = smtplib.SMTP('localhost', 587)
-                smtp.ehlo_or_helo_if_needed()
+                smtp = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
+                smtp.login(EMAIL_USER, EMAIL_PASSWORD)
                 smtp.sendmail(email, CONTACT_EMAIL_BOX, mensagem)
                 # send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
                 messages.add_message(
