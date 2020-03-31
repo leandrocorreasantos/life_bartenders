@@ -82,7 +82,7 @@ def contato(request):
                 nome, email, telefone, msg
             )
             try:
-                smtp = smtplib.SMTP('lifebartenders.com.br', 25)
+                smtp = smtplib.SMTP('localhost', 587)
                 smtp.ehlo_or_helo_if_needed()
                 smtp.sendmail(email, CONTACT_EMAIL_BOX, mensagem)
                 # send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
@@ -93,13 +93,13 @@ def contato(request):
                 )
                 print('email enviado')
                 smtp.quit()
-            except BadHeaderError:
+            except BadHeaderError as er:
                 messages.add_message(
                     request,
                     messages.ERROR,
                     "Houve um erro ao enviar a mensagem"
                 )
-                print('cabeçalho com erro')
+                print('cabeçalho com erro: {}'.format(er))
             except Exception as e:
                 print(e)
 
