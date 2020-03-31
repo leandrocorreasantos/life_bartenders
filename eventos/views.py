@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.mail import send_mail, BadHeaderError
+import smtplib
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
@@ -81,13 +82,17 @@ def contato(request):
                 nome, email, telefone, msg
             )
             try:
-                send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
+                smtp = smtplib.SMTP('lifebartenders.com.br', 25)
+                smtp.ehlo_or_helo_if_needed()
+                smtp.sendmail(email, CONTACT_EMAIL_BOX, mensagem)
+                # send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
                 messages.add_message(
                     request,
                     messages.SUCCESS,
                     "E-mail enviado com sucesso!"
                 )
                 print('email enviado')
+                smtp.quit()
             except BadHeaderError:
                 messages.add_message(
                     request,
