@@ -30,7 +30,11 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ENVIRONMENT = env('ENVIRONMENT')
 
-ALLOWED_HOSTS = ['localhost', 'lifebartenders.com.br']
+ALLOWED_HOSTS = [
+    'localhost',
+    'lifebartenders.com.br',
+    'www.lifebartenders.com.br'
+]
 
 SITE_ID = 1
 
