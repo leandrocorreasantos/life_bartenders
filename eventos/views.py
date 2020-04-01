@@ -76,7 +76,7 @@ def evento(request, slug, pk):
 
 
 def contato(request):
-    # assunto = 'Life Bartenders - Contato do Site'
+    assunto = 'Life Bartenders - Contato do Site'
     form = ContatoForm()
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -85,9 +85,19 @@ def contato(request):
             email = form.cleaned_data['email']
             telefone = form.cleaned_data['telefone']
             msg = form.cleaned_data['mensagem']
-            mensagem = "Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
+
+            body_message = "Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
             )
+
+            mensagem = "\r\n".join((
+                "From: %s" % EMAIL_HOST_USER,
+                "To: %s" % CONTACT_EMAIL_BOX,
+                "Subject: %s" % assunto,
+                "Reply-To: %s" % email,
+                "",
+                body_message
+            ))
             try:
 
                 if EMAIL_USE_SSL is True:
@@ -99,14 +109,6 @@ def contato(request):
 
                 smtp.sendmail(EMAIL_HOST_USER, [CONTACT_EMAIL_BOX], mensagem)
 
-                '''
-                send_mail(
-                    assunto,
-                    mensagem,
-                    EMAIL_HOST_USER,
-                    [CONTACT_EMAIL_BOX]
-                )
-                '''
                 messages.add_message(
                     request,
                     messages.SUCCESS,
