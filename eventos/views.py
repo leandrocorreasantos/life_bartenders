@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.mail import BadHeaderError  # , send_mail
 import smtplib
+import sys
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
@@ -84,20 +85,20 @@ def contato(request):
             nome = form.cleaned_data['nome']
             email = form.cleaned_data['email']
             telefone = form.cleaned_data['telefone']
-            msg = form.cleaned_data['mensagem']
+            msg = str(form.cleaned_data['mensagem']).encode('utf-8')
 
             body_message = u"Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
             )
 
-            mensagem = u"\r\n".join((
+            mensagem = "\r\n".join((
                 "From: %s" % EMAIL_HOST_USER,
                 "To: %s" % CONTACT_EMAIL_BOX,
                 "Subject: %s" % assunto,
                 "Reply-To: %s" % email,
                 "",
                 body_message
-            )).encode('utf-8')
+            ))
             try:
 
                 if EMAIL_USE_SSL is True:
