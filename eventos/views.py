@@ -86,9 +86,9 @@ def contato(request):
             telefone = form.cleaned_data['telefone']
             msg = form.cleaned_data['mensagem']
 
-            body_message = "Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
+            body_message = u"Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
-            )
+            ).encode('utf-8')
 
             mensagem = u"\r\n".join((
                 "From: %s" % EMAIL_HOST_USER,
