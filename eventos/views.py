@@ -98,7 +98,7 @@ def contato(request):
                 "Reply-To: %s" % email,
                 "",
                 body_message
-            ))
+            )).encode('utf-8')
             try:
 
                 if EMAIL_USE_SSL is True:
