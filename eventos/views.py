@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.core.mail import BadHeaderError  # , send_mail
 import smtplib
-import sys
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
@@ -78,7 +77,6 @@ def evento(request, slug, pk):
 
 def contato(request):
     assunto = 'Life Bartenders - Contato do Site'
-    sys.makedefaultencoding('utf-8')
     form = ContatoForm()
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -92,7 +90,7 @@ def contato(request):
                 nome, email, telefone, msg
             )
 
-            mensagem = "\r\n".join((
+            mensagem = u"\r\n".join((
                 "From: %s" % EMAIL_HOST_USER,
                 "To: %s" % CONTACT_EMAIL_BOX,
                 "Subject: %s" % assunto,
