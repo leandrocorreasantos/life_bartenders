@@ -90,14 +90,14 @@ def contato(request):
                 nome, email, telefone, msg
             )
 
-            mensagem = "\r\n".join((
+            mensagem = u"\r\n".join((
                 "From: %s" % EMAIL_HOST_USER,
                 "To: %s" % CONTACT_EMAIL_BOX,
                 "Subject: %s" % assunto,
                 "Reply-To: %s" % email,
                 "",
-                str(body_message).encode('utf-8')
-            ))
+                body_message
+            )).encode('utf-8')
             try:
 
                 if EMAIL_USE_SSL is True:
