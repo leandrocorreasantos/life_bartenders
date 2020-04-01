@@ -96,7 +96,7 @@ def contato(request):
                 "Subject: %s" % assunto,
                 "Reply-To: %s" % email,
                 "",
-                body_message.encode('utf-8')
+                str(body_message).encode('utf-8')
             ))
             try:
 
