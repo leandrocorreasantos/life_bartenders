@@ -78,6 +78,7 @@ def evento(request, slug, pk):
 
 def contato(request):
     assunto = 'Life Bartenders - Contato do Site'
+    sys.makedefaultencoding('utf-8')
     form = ContatoForm()
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -85,7 +86,7 @@ def contato(request):
             nome = form.cleaned_data['nome']
             email = form.cleaned_data['email']
             telefone = form.cleaned_data['telefone']
-            msg = str(form.cleaned_data['mensagem']).encode('utf-8')
+            msg = form.cleaned_data['mensagem']
 
             body_message = u"Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
