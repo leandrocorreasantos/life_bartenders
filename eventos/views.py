@@ -97,7 +97,7 @@ def contato(request):
                     smtp = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
                     smtp.use_ehlo_or_helo_if_needed()
 
-                smtp.sendmail(email, [CONTACT_EMAIL_BOX], mensagem)
+                smtp.sendmail(EMAIL_HOST_USER, [CONTACT_EMAIL_BOX], mensagem)
 
                 '''
                 send_mail(
