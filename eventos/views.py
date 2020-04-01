@@ -1,17 +1,17 @@
 from django.shortcuts import render
-from django.core.mail import BadHeaderError, send_mail
-# import smtplib
+from django.core.mail import BadHeaderError  # , send_mail
+import smtplib
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
 from .models import Evento, Galeria
 from lifebartenders.settings import (
     CONTACT_EMAIL_BOX,
-    # EMAIL_HOST,
-    # EMAIL_PORT,
+    EMAIL_HOST,
+    EMAIL_PORT,
     EMAIL_HOST_USER,
-    # EMAIL_HOST_PASSWORD,
-    # EMAIL_USE_SSL
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_SSL
 )
 
 
@@ -88,9 +88,8 @@ def contato(request):
             mensagem = "Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
             )
-            assunto = "Life Bartenders - Contato do Site"
             try:
-                '''
+
                 if EMAIL_USE_SSL is True:
                     smtp = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
                     smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
@@ -99,6 +98,7 @@ def contato(request):
                     smtp.use_ehlo_or_helo_if_needed()
 
                 smtp.sendmail(email, [CONTACT_EMAIL_BOX], mensagem)
+
                 '''
                 send_mail(
                     assunto,
@@ -106,13 +106,14 @@ def contato(request):
                     EMAIL_HOST_USER,
                     [CONTACT_EMAIL_BOX]
                 )
+                '''
                 messages.add_message(
                     request,
                     messages.SUCCESS,
                     "E-mail enviado com sucesso!"
                 )
                 print('email enviado')
-                # smtp.quit()
+                smtp.quit()
             except BadHeaderError as er:
                 messages.add_message(
                     request,
