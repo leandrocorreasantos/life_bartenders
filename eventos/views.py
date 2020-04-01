@@ -88,7 +88,7 @@ def contato(request):
 
             body_message = u"Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
-            ).encode('utf-8')
+            )
 
             mensagem = u"\r\n".join((
                 "From: %s" % EMAIL_HOST_USER,
