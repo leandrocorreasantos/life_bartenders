@@ -202,6 +202,14 @@
     <script src="{% static  'js/modernizr.custom.26633.js' %}"></script>
     <script src="{% static  'js/jquery.gridrotator.js' %}"></script>
     <script src="{% static  'js/theme.js' %}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162025444-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-162025444-1');
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 

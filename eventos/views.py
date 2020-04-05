@@ -1,10 +1,19 @@
+# coding: utf-8
 from django.shortcuts import render
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import BadHeaderError  # , send_mail
+import smtplib
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .forms import ContatoForm
 from .models import Evento, Galeria
-from lifebartenders.settings import CONTACT_EMAIL_BOX
+from lifebartenders.settings import (
+    CONTACT_EMAIL_BOX,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_HOST_USER,
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_SSL
+)
 
 
 # Create your views here.
@@ -77,24 +86,44 @@ def contato(request):
             email = form.cleaned_data['email']
             telefone = form.cleaned_data['telefone']
             msg = form.cleaned_data['mensagem']
-            mensagem = "Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
+
+            body_message = u"Nome: {}\nEmail: {}\nTelefone: {}\n\n{}".format(
                 nome, email, telefone, msg
             )
+
+            mensagem = u"\r\n".join((
+                "From: %s" % EMAIL_HOST_USER,
+                "To: %s" % CONTACT_EMAIL_BOX,
+                "Subject: %s" % assunto,
+                "Reply-To: %s" % email,
+                "",
+                body_message
+            )).encode('utf-8')
             try:
-                send_mail(assunto, mensagem, email, [CONTACT_EMAIL_BOX])
+
+                if EMAIL_USE_SSL is True:
+                    smtp = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
+                    smtp.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+                else:
+                    smtp = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+                    smtp.use_ehlo_or_helo_if_needed()
+
+                smtp.sendmail(EMAIL_HOST_USER, [CONTACT_EMAIL_BOX], mensagem)
+
                 messages.add_message(
                     request,
                     messages.SUCCESS,
                     "E-mail enviado com sucesso!"
                 )
                 print('email enviado')
-            except BadHeaderError:
+                smtp.quit()
+            except BadHeaderError as er:
                 messages.add_message(
                     request,
                     messages.ERROR,
                     "Houve um erro ao enviar a mensagem"
                 )
-                print('cabeçalho com erro')
+                print('cabeçalho com erro: {}'.format(er))
             except Exception as e:
                 print(e)
 

@@ -30,7 +30,11 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ENVIRONMENT = env('ENVIRONMENT')
 
-ALLOWED_HOSTS = ['localhost', 'lifebartenders.com.br']
+ALLOWED_HOSTS = [
+    'localhost',
+    'lifebartenders.com.br',
+    'www.lifebartenders.com.br'
+]
 
 SITE_ID = 1
 
@@ -63,11 +67,11 @@ MIDDLEWARE = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CONTACT_EMAIL_BOX = env('CONTACT_EMAIL_BOX')
 
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST = 'smtp.lifebartenders.com.br'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'lifebartenders@lifebartenders.com.br'
+EMAIL_USE_TLS = bool(env('EMAIL_USE_TLS'))
+EMAIL_USE_SSL = bool(env('EMAIL_USE_SSL'))
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = int(env('EMAIL_PORT'))
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 
