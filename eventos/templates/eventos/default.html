@@ -49,6 +49,15 @@
     <!-- End Preloader -->
     <!-- Nav Section -->
     <header class="header-area">
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endif %}
+
         <!-- Nav Section -->
         <nav class="navbar navbar-default navbar-fixed-top nav-area" id="scroll-menu">
             <!-- Header Top Section -->
@@ -73,7 +82,7 @@
             <div class="container">
                 <div class="logo-menu-wrap">
                     <div class="logo">
-                        <a href="index.html"><img src="{% static 'img/logo-lifebartenders.png' %}" alt="Logo Life Bartenders"></a>
+                        <a href="/"><img src="{% static 'img/logo-lifebartenders.png' %}" alt="Logo Life Bartenders"></a>
                     </div>
                     <div class="main-menu main-menu-mrg1">
                         <nav>
@@ -118,7 +127,7 @@
         </nav>
     </header>
     <!-- End Nav Section -->
-    {% block content %}{% endblock %}
+	    {% block content %}{% endblock %}
     <!-- Footer Section -->
     <footer>
         <div class="footer-area footer-area2 foo" data-sr='bottom'>

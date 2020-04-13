@@ -115,7 +115,6 @@ def contato(request):
                     messages.SUCCESS,
                     "E-mail enviado com sucesso!"
                 )
-                print('email enviado')
                 smtp.quit()
             except BadHeaderError as er:
                 messages.add_message(
@@ -123,7 +122,7 @@ def contato(request):
                     messages.ERROR,
                     "Houve um erro ao enviar a mensagem"
                 )
-                print('cabeçalho com erro: {}'.format(er))
+                print(er)
             except Exception as e:
                 print(e)
 
