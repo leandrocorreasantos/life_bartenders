@@ -1,12 +1,19 @@
-DOCKER_CMD=docker exec -it djangolifebartenders
+DOCKER_CMD=docker exec -it lifebartenders
 
+_upgrade-pip:
+	${DOCKER_CMD} pip install --upgrade pip
 
-setup:
-	pip install -r requirements.txt
+build:
+	docker-compose up -d
+
+setup: _upgrade-pip
+	${DOCKER_CMD} pip install -r requirements.txt
 
 migrate:
-	python manage.py migrate
+	${DOCKER_CMD} python manage.py migrate
 
 start:
-	python manage.py runserver
+	${DOCKER_CMD} gunicorn lifebartenders.wsgi:application --bind 0.0.0.0:8000 --workers 3
+# 	${DOCKER_CMD} python manage.py runserver
+# 	docker run -it lifebartenders
 
